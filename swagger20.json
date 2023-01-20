@@ -1,77 +1,466 @@
-{  
-   "swagger":"2.0",
-   "info":{  
-      "description":"A service for checking credit for an account.",
-      "version":"1.0.0",
-      "title":"Credit Decision",
-      "termsOfService":"http://swagger.io/terms/",
-      "contact":{  
-         "email":"apiteam@swagger.io"
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "OptIn API",
+    "description": "API de OptIn",
+    "version": "v1"
+  },
+  "host": "api.banco.com.br",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/pessoa/cpf/{cpf}": {
+      "get": {
+        "tags": [
+          "OptIn"
+        ],
+        "summary": "Busca informações de opt-in de um cliente pelo cpf",
+        "operationId": "OptIn_GetOptions",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "description": "Parâmetro \"CPF\" do cliente",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "Objeto com informações de opt-in do cliente",
+            "schema": {
+              "$ref": "#/definitions/PersonOptions"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
-      "license":{  
-         "name":"Apache 2.0",
-         "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
-   },
-   "host":"<YourHostName>",
-   "paths":{  
-      "/account/lastCreditRating":{  
-         "get":{  
-            "summary":"Evaluates credit rating and decides what payment terms to offer.",
-            "description":"",
-            "consumes":[  
-               "application/json",
-               "application/xml"
-            ],
-            "produces":[  
-               "application/xml",
-               "application/json"
-            ],
-            "parameters":[{  
-               "in":"body",
-               "name":"body",
-               "description":"Specifies input parameters to calculate payment term",
-               "required":true,
-               "schema":{  
-                  "$ref":"#/definitions/accountId"
-               }
-            }],
-            "responses":{  
-               "200":{  
-                  "description":"success",
-                  "schema":{  
-                     "$ref":"#/definitions/creditRating"
-                  }
-               },
-               "405":{  
-                  "description":"Invalid input"
-               }
+      "delete": {
+        "tags": [
+          "OptIn"
+        ],
+        "summary": "Opção pelo direito de esquecimento do cliente",
+        "operationId": "OptIn_Forget",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "description": "Parâmetro \"CPF\" do cliente",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/PersonOptions"
             }
-         }
-      }
-   },
-   "definitions":{  
-      "accountId":{  
-         "type":"object",
-         "properties":{  
-            "accountIdString":{  
-               "type":"string"
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
-         },
-         "xml":{  
-            "name":"accountId"
-         }
-      },
-      "creditRating":{  
-         "type":"object",
-         "properties":{  
-            "creditRatingString":{  
-               "type":"string"
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
-         },
-         "xml":{  
-            "name":"creditRating"
-         }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
-   }
+    },
+    "/api/v1/pessoa/cpf/{cpf}/contact": {
+      "put": {
+        "tags": [
+          "OptIn"
+        ],
+        "summary": "Atualiza a forma de contato preferencial do usuário",
+        "operationId": "OptIn_UpdateContact",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "description": "Parâmetro \"CPF\" do cliente",
+            "x-nullable": true
+          },
+          {
+            "name": "contact",
+            "in": "body",
+            "required": true,
+            "description": "Parâmetro contato preferencialdo cliente",
+            "schema": {
+              "$ref": "#/definitions/ContactViewModel"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/PersonOptions"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pessoa/cpf/{cpf}/optin": {
+      "put": {
+        "tags": [
+          "OptIn"
+        ],
+        "summary": "Atualiza informações de opt-in do cliente",
+        "operationId": "OptIn_Update",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "description": "Parâmetro \"CPF\" do cliente",
+            "x-nullable": true
+          },
+          {
+            "name": "newOptions",
+            "in": "body",
+            "required": true,
+            "description": "Opções de opt-in para serem gravadas",
+            "schema": {
+              "$ref": "#/definitions/OptInViewModel"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/PersonOptions"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pessoa": {
+      "post": {
+        "tags": [
+          "OptIn"
+        ],
+        "summary": "Adiciona um novo cliente",
+        "operationId": "OptIn_Add",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "personOptions",
+            "in": "body",
+            "required": true,
+            "description": "Parâmetro com as informações do cliente a serem gravadas",
+            "schema": {
+              "$ref": "#/definitions/PersonOptionsViewModel"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "x-nullable": false,
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/PersonOptions"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PersonOptions": {
+      "type": "object",
+      "properties": {
+        "tenetID": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "cpf": {
+          "type": "string"
+        },
+        "profiling": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "marketing": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "storaging": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "forgotRight": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bestContact": {
+          "type": "string"
+        }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      }
+    },
+    "ContactViewModel": {
+      "type": "object",
+      "properties": {
+        "bestContact": {
+          "type": "string",
+          "description": "Best Contact \\\nForma de contato preferencial"
+        }
+      }
+    },
+    "OptInViewModel": {
+      "type": "object",
+      "required": [
+        "profiling",
+        "marketing",
+        "storaging"
+      ],
+      "properties": {
+        "profiling": {
+          "type": "boolean",
+          "description": "Profiling \\\nAutorização para profiling??"
+        },
+        "marketing": {
+          "type": "boolean",
+          "description": "Marketing \\\nAutorização para recebimento de conteúdo de marketing"
+        },
+        "storaging": {
+          "type": "boolean",
+          "description": "Storaging \\\nAutorização para armazenamento de dados"
+        }
+      }
+    },
+    "PersonOptionsViewModel": {
+      "type": "object",
+      "required": [
+        "profiling",
+        "marketing",
+        "storaging"
+      ],
+      "properties": {
+        "tenetID": {
+          "type": "string",
+          "description": "TenetID \\\nIdentificar do Tenet"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name \\\nNome do cliente"
+        },
+        "cpf": {
+          "type": "string",
+          "description": "Cpf \\\nCpf do cliente"
+        },
+        "processCode": {
+          "type": "string",
+          "description": "Proposal \\\nProposta do cliente"
+        },
+        "profiling": {
+          "type": "boolean",
+          "description": "Profiling \\\nAutorização para profiling??"
+        },
+        "marketing": {
+          "type": "boolean",
+          "description": "Marketing \\\nAutorização para recebimento de conteúdo de marketing"
+        },
+        "storaging": {
+          "type": "boolean",
+          "description": "Storaging \\\nAutorização para armazenamento de dados"
+        },
+        "bestContact": {
+          "type": "string",
+          "description": "Best Contact \\\nForma de contato preferencial"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "description": "Token de autenticação",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ],
+  "basePath": "/banco/optin"
 }
