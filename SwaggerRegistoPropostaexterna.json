@@ -1,0 +1,2068 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RegistoPropostaExterna API",
+    "description": "RegistoPropostaExterna API",
+    "termsOfService": "https://cofidis.pt/",
+    "contact": {
+      "name": "Diogo Martins",
+      "email": "diogo.martins@cofidis.pt"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Account/GetToken": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Generates a new token",
+        "description": "Sample request:\r\n            \r\n    POST \r\n    {\r\n        \"username\": \"test\",\r\n        \"password\": \"test\"\r\n    }",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the newly token",
+            "schema": {
+              "$ref": "#/definitions/TokenViewModelSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Account/NotifyPartner": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DossierAutoPartnerRequestDtoListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/DigitalSignature/NewProcess/{numProspect}": {
+      "post": {
+        "tags": [
+          "DigitalSignature"
+        ],
+        "summary": "Starts new process",
+        "description": "Sample request:\r\n            \r\n    POST \r\n    {\r\n        \"numProspect\" : \"12131\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "numProspect",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/NewProcessResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/DigitalSignature/Status/{numProspect}": {
+      "get": {
+        "tags": [
+          "DigitalSignature"
+        ],
+        "summary": "Get process status",
+        "description": "Sample request:\r\n\r\n    GET \r\n    {\r\n        \"numProspect\" : \"12131\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "numProspect",
+            "description": "Prospect Number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/StatusOTPResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/DigitalSignature/ResendSMS": {
+      "post": {
+        "tags": [
+          "DigitalSignature"
+        ],
+        "summary": "Resends sms",
+        "description": "Sample request:\r\n\r\n    POST \r\n    {\r\n      \"NumProspect\": \"123\",\r\n      \"NIF\": 1216467,\r\n    }",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ResendSMSRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/ResendSMSResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Document/SubmitDocument": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Submites a document",
+        "description": "Sample request:\r\n            \r\n    Post \r\n    {\r\n      \"IdPedido\": 4581521,\r\n      \"NumProspect\": \"0044695_20V2\",\r\n      \"File\": {\r\n        \"FileName\": \"contrato_teste\",\r\n        \"FileSize\": 0,\r\n        \"FileType\": \"application/pdf\",\r\n        \"FileBytes\": \"\",\r\n        \"ExtractedFields\": {\r\n            \"NomeCompleto\": \"John Doe\",        \r\n            \"DataNasc\": \"1988-04-26T00:00:00Z\"\r\n        }\r\n      }\r\n    }",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SubmeterDocumentoPedidoRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/SubmeterDocumentoResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Proposal/ExternalProposal": {
+      "post": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Submites a proposal",
+        "description": "Sample request:\r\n            \r\n    Post \r\n    {\r\n      \"IdSimulacao\": 1216467,\r\n      \"NumProspect\": \"\",\r\n      \"CodSubFinalidade\": \"FER\",\r\n      \"DadosVeiculo\": {\r\n        \"Chassi\": \"11111111111111111\",\r\n        \"Marca\": \"56\",\r\n        \"Modelo\": \"47974\",\r\n        \"Versao\": \"229175\",\r\n        \"Tylacod\":\"926177\",\r\n        \"Cor\": \"PRETO\",\r\n        \"DetalheBem\": \"teste\"\r\n      },\r\n      \"OutrosCreditos\": [\r\n        {\r\n        \"IdInstituicaoFinanceira\": 3486,\r\n        \"DtInicioCredito\": \"2022-04-16T00:00:00Z\",\r\n        \"DuracaoCredito\": 10,\r\n        \"MntMensalidade\": 300,\r\n        \"MntDivida\": 10000,\r\n        \"Produto\": \"Linha de Crédito\",\r\n        \"NumDossierExterno\": \"3123132\",\r\n        \"CreditoHabitacao\": false,\r\n        \"Consolidar\": true\r\n        }\r\n      ],\r\n      \"Entidades\": [\r\n        {\r\n        \"TipoInterveniente\": \"T\",\r\n        \"OrdemInterveniente\": \"1\",\r\n        \"TipoCliente\": \"P\",\r\n        \"NIF\": \"267641338\",\r\n        \"DocIdentificacao\": \"12\",\r\n        \"NrDocIdentificacao\": \"1234567\",\r\n        \"DocIdentificacaoValidade\": \"2022-04-16T00:00:00Z\",\r\n        \"NomeCompleto\": \"LUIS a\",\r\n        \"DataNasc\": \"1988-04-26T00:00:00Z\",\r\n        \"Genero\": \"M\",\r\n        \"Nacionalidade\": \"P\",\r\n        \"Pais\": \"PRT\",\r\n        \"DuplaNacionalidade\": \"BRA\",\r\n        \"NatDistrito\": \"017\",\r\n        \"NatConcelho\": \"014\",\r\n        \"EstadoCivil\": \"S\",\r\n        \"NrDependentes\": \"0\",\r\n        \"DadosMorada\": [\r\n            {\r\n              \"Tipo\": \"OFI\",\r\n              \"Morada\": \"RUA BOMBEIRO PORFIRIO PEREIRA,2\",\r\n              \"Localidade\": \"Vila Real\",\r\n              \"CodigoPostal1\": \"5000\",\r\n              \"CodigoPostal2\": \"448\"\r\n            },\r\n            {\r\n              \"Tipo\": \"FIS\",\r\n              \"Morada\": \"RUA BOMBEIRO PORFIRIO PEREIRA,2\",\r\n              \"Localidade\": \"Vila Real\",\r\n              \"CodigoPostal1\": \"5000\",\r\n              \"CodigoPostal2\": \"448\"\r\n            }\r\n          ],\r\n        \"DadosHabitacao\": {\r\n              \"TipoHabitacao\": \"P\",\r\n        \"HabitacaoAntig\": \"2010\"\r\n          },\r\n        \"Contactos\": {\r\n           \"Email\": \"testeijap@cofidis.pt\",\r\n           \"Telemovel\": \"911111111\",\r\n           \"OutroContactoTelef\": \"259000000\"\r\n          },\r\n        \"SetorProfissional\": \"B\",\r\n        \"Profissao\": \"34\",\r\n        \"TipoContrato\": \"2\",\r\n        \"DtInicioAtividade\": \"2020-06-24T14:55:03.413Z\",\r\n        \"EntidadePatronal\": \"SECRETARIA REGIONAL DE EDUCAÇAO CIENCIA E TECNOLOGIA CONSERVATORIA ESCOLA ARTES DA MADEIRA\",\r\n        \"EntidadePatronalNIPC\": \"500218312\",\r\n        \"EntidadePatronalTlf\": \"910000000\",\r\n        \"EntidadePatronalNACE\": \"S\",\r\n        \"QuestoesBCFT\": [\r\n            {\r\n              \"CodQuestao\": \"BCFT_Q1\",\r\n              \"CodResposta\": \"N\",\r\n              \"CodOpcao\": \"\"\r\n            },\r\n                    {\r\n              \"CodQuestao\": \"BCFT_Q2\",\r\n              \"CodResposta\": \"N\",\r\n              \"CodOpcao\": \"\"\r\n            },\r\n                    {\r\n              \"CodQuestao\": \"BCFT_Q3\",\r\n              \"CodResposta\": \"S\",\r\n              \"CodOpcao\": \"\"\r\n            }\r\n          ],\r\n          \"Rendimentos\": [\r\n            {\r\n              \"Tipo\": \"RML\",\r\n              \"Valor\": 2222\r\n            }\r\n          ],\r\n          \"Despesas\": [\r\n            {\r\n              \"Tipo\": \"OE\",\r\n              \"Valor\": 110\r\n            }\r\n          ],\r\n          \"SegVida\": false,\r\n          \"SegVidaMais\": true,\r\n          \"SegVidaProtegida\": true,\r\n          \"RelTitular1\": \"\",\r\n          \"RelacionamentoEntidades\": [\r\n          ],\r\n          \"DadosBancarios\": [\r\n            {\r\n              \"NumConta\": \"00004539419133905\",\r\n              \"CodBanco\": \"0033\",\r\n              \"DiaVencimento\": \"1\"\r\n            }\r\n          ]\r\n        },\r\n         {\r\n         \"TipoInterveniente\": \"F\",\r\n        \"OrdemInterveniente\": \"1\",\r\n        \"TipoCliente\": \"P\",\r\n        \"NIF\": \"257518460\",\r\n        \"DocIdentificacao\": \"12\",\r\n        \"NrDocIdentificacao\": \"1234567\",\r\n        \"DocIdentificacaoValidade\": \"2022-04-16T00:00:00Z\",\r\n       \"NomeCompleto\": \"LUIS B\",\r\n        \"DataNasc\": \"1988-04-26T00:00:00Z\",\r\n        \"Genero\": \"M\",\r\n        \"Nacionalidade\": \"P\",\r\n        \"Pais\": \"PRT\",\r\n        \"DuplaNacionalidade\": \"BRA\",\r\n        \"NatDistrito\": \"017\",\r\n        \"NatConcelho\": \"014\",\r\n        \"EstadoCivil\": \"S\",\r\n        \"NrDependentes\": \"0\",\r\n        \"DadosMorada\": [\r\n            {\r\n              \"Tipo\": \"OFI\",\r\n              \"Morada\": \"RUA BOMBEIRO PORFIRIO PEREIRA,2\",\r\n              \"Localidade\": \"Vila Real\",\r\n              \"CodigoPostal1\": \"5000\",\r\n              \"CodigoPostal2\": \"448\"\r\n            },\r\n            {\r\n              \"Tipo\": \"FIS\",\r\n              \"Morada\": \"RUA BOMBEIRO PORFIRIO PEREIRA,2\",\r\n              \"Localidade\": \"Vila Real\",\r\n              \"CodigoPostal1\": \"5000\",\r\n              \"CodigoPostal2\": \"448\"\r\n            }\r\n          ],\r\n        \"DadosHabitacao\": {\r\n              \"TipoHabitacao\": \"P\",\r\n        \"HabitacaoAntig\": \"2010\"\r\n          },\r\n        \"Contactos\": {\r\n           \"Email\": \"testeijap@cofidis.pt\",\r\n           \"Telemovel\": \"911111111\",\r\n           \"OutroContactoTelef\": \"259000000\"\r\n          },\r\n        \"SetorProfissional\": \"B\",\r\n        \"Profissao\": \"34\",\r\n        \"TipoContrato\": \"2\",\r\n        \"DtInicioAtividade\": \"2020-06-24T14:55:03.413Z\",\r\n        \"EntidadePatronal\": \"SECRETARIA REGIONAL DE EDUCAÇAO CIENCIA E TECNOLOGIA CONSERVATORIA ESCOLA ARTES DA MADEIRA\",\r\n        \"EntidadePatronalNIPC\": \"500218312\",\r\n        \"EntidadePatronalTlf\": \"910000000\",\r\n        \"EntidadePatronalNACE\": \"S\",\r\n        \"QuestoesBCFT\": [\r\n            {\r\n              \"CodQuestao\": \"BCFT_Q1\",\r\n              \"CodResposta\": \"N\",\r\n              \"CodOpcao\": \"\"\r\n            },\r\n                    {\r\n              \"CodQuestao\": \"BCFT_Q2\",\r\n              \"CodResposta\": \"N\",\r\n              \"CodOpcao\": null\r\n            },\r\n                    {\r\n              \"CodQuestao\": \"BCFT_Q3\",\r\n              \"CodResposta\": \"S\",\r\n              \"CodOpcao\": null\r\n            }\r\n          ],\r\n          \"Rendimentos\": [\r\n            {\r\n              \"Tipo\": \"RML\",\r\n              \"Valor\": 2222\r\n            }\r\n          ],\r\n          \"Despesas\": [\r\n            {\r\n              \"Tipo\": \"OE\",\r\n              \"Valor\": 110\r\n            }\r\n          ],\r\n          \"SegVida\": false,\r\n          \"SegVidaMais\": true,\r\n          \"RelTitular1\": \"\",\r\n          \"RelacionamentoEntidades\": [\r\n    \r\n    \r\n          ],\r\n          \"DadosBancarios\": [\r\n            {\r\n              \"NumConta\": \"00004539419133905\",\r\n              \"CodBanco\": \"0033\",\r\n              \"DiaVencimento\": \"1\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PropostaExternaRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/PropostaExternaResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Proposal/FaultDetails/{numProspect}": {
+      "get": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Get fault details",
+        "description": "Sample request:\r\n\r\n    GET \r\n    {\r\n        \"numProspect\" : \"12131\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "numProspect",
+            "description": "Prospect Number",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/DetalhesFaltaPropostaResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Proposal/ProposalPendingsAndStatusUpdate/{partnerCode}": {
+      "get": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Get all Pendings and Status Updates",
+        "description": "Sample request:\r\n\r\n    GET \r\n    {\r\n        partnerCode : \"1231\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "partnerCode",
+            "description": "Partner Code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/ProposalPendingsAndStatusUpdateResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/Proposal/FinancialInstitution/{bankCode}": {
+      "get": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Get Financial Institution ID through Bank Code",
+        "description": "Sample request:\r\n\r\n    GET \r\n    {\r\n        bankCode : \"0188\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bankCode",
+            "description": "Bank Code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/FinancialInstitutionByBankCodeResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/References/Manufacturers/{IDBemFinanciar}": {
+      "get": {
+        "tags": [
+          "References"
+        ],
+        "summary": "Get Manufacturers",
+        "description": "Sample request:\r\n            \r\n    GET \r\n    {\r\n      \"IDBemFinanciar\": 104892\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "IDBemFinanciar",
+            "description": "ID Bem Financiar",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/ManufacturerResponseDtoListViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/References/Models/{IDMarca}/{IDBemFinanciar}": {
+      "get": {
+        "tags": [
+          "References"
+        ],
+        "summary": "Get Models",
+        "description": "Sample request:\r\n            \r\n    GET \r\n    {\r\n      \"IDMarca\": 1,\r\n      \"IDBemFinanciar\": 104892\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "IDMarca",
+            "description": "ID Marca",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "IDBemFinanciar",
+            "description": "ID Bem Financiar",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/ModelsResponseDtoListViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/References/Versions/{IDVersao}/{IDBemFinanciar}": {
+      "get": {
+        "tags": [
+          "References"
+        ],
+        "summary": "Get Versions",
+        "description": "Sample request:\r\n            \r\n    GET \r\n    {\r\n      \"IDVersao\": 4777,\r\n      \"IDBemFinanciar\": 104892\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "IDVersao",
+            "description": "ID Versão",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "IDBemFinanciar",
+            "description": "ID Bem Financiar",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/VersionsResponseDtoListViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/References/Get/{type}": {
+      "get": {
+        "tags": [
+          "References"
+        ],
+        "summary": "Get Versions",
+        "description": "Sample request:\r\n            \r\n    GET \r\n    {\r\n      \"type\": \"asd\"\r\n    }",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "description": "ID Bem Financiar",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/MappingsResponseDtoListViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/References/PostalCode": {
+      "get": {
+        "tags": [
+          "References"
+        ],
+        "summary": "Postal codes list",
+        "description": "Sample request:\r\n            \r\n    GET \r\n    { \r\n    }",
+        "responses": {
+          "200": {
+            "description": "Postal codes list"
+          }
+        }
+      }
+    },
+    "/Simulate/ExternalSimulation": {
+      "post": {
+        "tags": [
+          "Simulate"
+        ],
+        "summary": "Submites a simulation",
+        "description": "Sample request:\r\n            \r\n    Post \r\n    {\r\n      \"IdSimulacao\": 0,\r\n      \"Save\": true,\r\n      \"CodTipSimulacao\": \"C\",\r\n      \"TipoSimulacaoValor\": 2,\r\n      \"TipoCliente\": \"P\",\r\n      \"TipoUtilizacao\": \"PES\",\r\n      \"TipoOferta\": \"F\",\r\n      \"TipoProduto\": \"CA\",\r\n      \"Ano\": \"2020\",\r\n      \"Bem\": \"104892\",\r\n      \"EstadoBem\": \"N\",\r\n      \"Importado\": true,\r\n      \"iPrimRegAutoPort\": true,\r\n      \"Matricula\": \"\",\r\n      \"CodParceiro\": \"622383\",\r\n      \"Username\": \"4982\",\r\n      \"NomeVendedor\": \"jap3vila\",\r\n      \"MntPVP\": 15555,\r\n      \"MntEntradaInicial\": 100,\r\n      \"MntCapitalResidual\": 0,\r\n      \"Periodicidade\": \"M\",\r\n      \"NrPrestacoes\": \"120\",\r\n      \"NrSeguroVida\": 1,\r\n      \"NrSeguroVidaMais\": 1,\r\n      \"NrSeguroVidaProtegida\": 1,\r\n      \"TipoSeguroVidaSegundoTitular\": \"\",\r\n      \"DetalheVeiculo\": {\r\n        \"Tylacod\":\"926177\"\r\n      },\r\n    \"Comissoes\": [\r\n        {\r\n          \"IdComissao\": 0,\r\n          \"IdSimulacao\": 0,\r\n          \"Codigo\": \"ISU\",\r\n          \"Montante\": 0,\r\n          \"CodLocPagamento\": \"S\",\r\n          \"Percentagem\": 0,\r\n          \"MontanteMinimo\": 0,\r\n          \"MontanteMaximo\": 0,\r\n          \"Financiada\": true,\r\n          \"Ativo\": true\r\n        },\r\n       {\r\n          \"IdComissao\": 0,\r\n          \"IdSimulacao\": 0,\r\n          \"Codigo\": \"CA\",\r\n          \"Montante\": 0,\r\n          \"CodLocPagamento\": \"S\",\r\n          \"Percentagem\": 0,\r\n          \"MontanteMinimo\": 0,\r\n          \"MontanteMaximo\": 0,\r\n          \"Financiada\": true,\r\n          \"Ativo\": true\r\n        },\r\n        {\r\n          \"IdComissao\": 0,\r\n          \"IdSimulacao\": 0,\r\n          \"Codigo\": \"DTG\",\r\n          \"Montante\": 0,\r\n          \"CodLocPagamento\": \"S\",\r\n          \"Percentagem\": 0,\r\n          \"MontanteMinimo\": 0,\r\n          \"MontanteMaximo\": 0,\r\n          \"Financiada\": true,\r\n          \"Ativo\": true\r\n        }\r\n      ],\r\n      \"CoberturasSeguroAuto\": [\r\n        {\r\n          \"IdDespesaDiversa\": 0,\r\n          \"IdSimulacao\": 0,\r\n          \"CodDespesaDiversa\": \"AVB\",\r\n          \"Montante\": 0,\r\n          \"MontanteMinimo\": 0,\r\n          \"CodCobertura\": \"VBQV\",\r\n          \"DataFim\": \"2020-06-19T00:00:00Z\",\r\n          \"DataNascimento\": \"1988-04-26T00:00:00Z\",\r\n          \"CodigoPostal1\": \"2800\",\r\n          \"CodigoPostal2\": \"013\",\r\n          \"Ativo\": true\r\n        },\r\n        {\r\n          \"IdDespesaDiversa\": 0,\r\n          \"IdSimulacao\": 0,\r\n          \"CodDespesaDiversa\": \"AVB\",\r\n          \"Montante\": 0,\r\n          \"MontanteMinimo\": 0,\r\n          \"CodCobertura\": \"VBRC1\",\r\n          \"DataFim\": \"2020-06-19T00:00:00Z\",\r\n          \"DataNascimento\": \"1988-04-26T00:00:00Z\",\r\n          \"CodigoPostal1\": \"2800\",\r\n          \"CodigoPostal2\": \"013\",\r\n          \"Ativo\": true\r\n        }\r\n      ]\r\n    }",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SimulacaoExternaRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OkResult",
+            "schema": {
+              "$ref": "#/definitions/SimulacaoExternaResponseDtoSingleViewModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TokenViewModel": {
+      "type": "object",
+      "properties": {
+        "AccessToken": {
+          "type": "string"
+        },
+        "TokenType": {
+          "type": "string"
+        },
+        "ExpiresIn": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ErrorViewModel": {
+      "description": "Error response structure",
+      "type": "object",
+      "properties": {
+        "Code": {
+          "description": "Error code",
+          "type": "string"
+        },
+        "Message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      }
+    },
+    "TokenViewModelSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/TokenViewModel"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "DossierAutoPartnerRequestDto": {
+      "type": "object",
+      "properties": {
+        "ExternalProposalNumber": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusDesc": {
+          "type": "string"
+        },
+        "Motive": {
+          "type": "string"
+        },
+        "MasterDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "type": "string"
+        },
+        "Message": {
+          "type": "string"
+        }
+      }
+    },
+    "DossierAutoPartnerRequestDtoListResponse": {
+      "type": "object",
+      "properties": {
+        "Data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DossierAutoPartnerRequestDto"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "type": "string"
+        },
+        "Errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "NewProcessResponseDto": {
+      "type": "object",
+      "properties": {
+        "Success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "NewProcessResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/NewProcessResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "ExtStatusOTPResponseDto": {
+      "type": "object",
+      "properties": {
+        "NIF": {
+          "type": "string"
+        },
+        "StatusClient": {
+          "type": "string"
+        }
+      }
+    },
+    "StatusOTPResponseDto": {
+      "type": "object",
+      "properties": {
+        "NumProspect": {
+          "type": "string"
+        },
+        "ProcessStatus": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExtStatusOTPResponseDto"
+          }
+        }
+      }
+    },
+    "StatusOTPResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/StatusOTPResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "ResendSMSRequestDto": {
+      "type": "object",
+      "properties": {
+        "NumProspect": {
+          "type": "string"
+        },
+        "NIF": {
+          "type": "string"
+        }
+      }
+    },
+    "ResendSMSResponseDto": {
+      "type": "object",
+      "properties": {
+        "Success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ResendSMSResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/ResendSMSResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "InfoFileDto": {
+      "type": "object",
+      "properties": {
+        "FileName": {
+          "type": "string"
+        },
+        "FileSize": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "FileType": {
+          "type": "string"
+        },
+        "FileBytes": {
+          "type": "string"
+        },
+        "ExtractedFields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SubmeterDocumentoPedidoRequestDto": {
+      "type": "object",
+      "properties": {
+        "IDPedido": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "NumProspect": {
+          "type": "string"
+        },
+        "File": {
+          "$ref": "#/definitions/InfoFileDto"
+        }
+      }
+    },
+    "SubmeterDocumentoResponseDto": {
+      "type": "object",
+      "properties": {
+        "Sucesso": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SubmeterDocumentoResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/SubmeterDocumentoResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "DetalheVeiculoDto": {
+      "type": "object",
+      "properties": {
+        "Matricula": {
+          "type": "string"
+        },
+        "Chassi": {
+          "type": "string"
+        },
+        "Marca": {
+          "type": "string"
+        },
+        "Modelo": {
+          "type": "string"
+        },
+        "Versao": {
+          "type": "string"
+        },
+        "Cor": {
+          "type": "string"
+        },
+        "DetalheBem": {
+          "type": "string"
+        },
+        "Tylacod": {
+          "type": "string"
+        }
+      }
+    },
+    "DadosHabitacaoDto": {
+      "type": "object",
+      "properties": {
+        "TipoHabitacao": {
+          "type": "string"
+        },
+        "HabitacaoAntig": {
+          "type": "string"
+        }
+      }
+    },
+    "DadosMoradaDto": {
+      "type": "object",
+      "properties": {
+        "Tipo": {
+          "type": "string"
+        },
+        "Morada": {
+          "type": "string"
+        },
+        "Localidade": {
+          "type": "string"
+        },
+        "CodigoPostal1": {
+          "type": "string"
+        },
+        "CodigoPostal2": {
+          "type": "string"
+        }
+      }
+    },
+    "ContactosDto": {
+      "type": "object",
+      "properties": {
+        "Email": {
+          "type": "string"
+        },
+        "Telemovel": {
+          "type": "string"
+        },
+        "OutroContactoTelef": {
+          "type": "string"
+        }
+      }
+    },
+    "BCFTDto": {
+      "type": "object",
+      "properties": {
+        "CodQuestao": {
+          "type": "string"
+        },
+        "CodResposta": {
+          "type": "string"
+        },
+        "CodOpcao": {
+          "type": "string"
+        }
+      }
+    },
+    "RendimentosDto": {
+      "type": "object",
+      "properties": {
+        "Tipo": {
+          "type": "string"
+        },
+        "Valor": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "RelacionamentoEntidadesDto": {
+      "type": "object",
+      "properties": {
+        "NIFrelacionado": {
+          "type": "string"
+        },
+        "TipoRelacao": {
+          "type": "string"
+        },
+        "Ordem": {
+          "type": "string"
+        }
+      }
+    },
+    "DadosBancariosDto": {
+      "type": "object",
+      "properties": {
+        "NumConta": {
+          "type": "string"
+        },
+        "CodBanco": {
+          "type": "string"
+        },
+        "DiaVencimento": {
+          "type": "string"
+        },
+        "IBAN": {
+          "type": "string"
+        }
+      }
+    },
+    "ElementosDto": {
+      "type": "object",
+      "properties": {
+        "TipoInterveniente": {
+          "type": "string"
+        },
+        "OrdemInterveniente": {
+          "type": "string"
+        },
+        "TipoCliente": {
+          "type": "string"
+        },
+        "NIF": {
+          "type": "string"
+        },
+        "DocIdentificacao": {
+          "type": "string"
+        },
+        "NrDocIdentificacao": {
+          "type": "string"
+        },
+        "CheckDigit": {
+          "type": "string"
+        },
+        "DocIdentificacaoValidade": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "NomeCompleto": {
+          "type": "string"
+        },
+        "DataNasc": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Genero": {
+          "type": "string"
+        },
+        "Nacionalidade": {
+          "type": "string"
+        },
+        "Pais": {
+          "type": "string"
+        },
+        "DuplaNacionalidade": {
+          "type": "string"
+        },
+        "NatDistrito": {
+          "type": "string"
+        },
+        "NatConcelho": {
+          "type": "string"
+        },
+        "EstadoCivil": {
+          "type": "string"
+        },
+        "NrDependentes": {
+          "type": "string"
+        },
+        "DadosHabitacao": {
+          "$ref": "#/definitions/DadosHabitacaoDto"
+        },
+        "DadosMorada": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DadosMoradaDto"
+          }
+        },
+        "Contactos": {
+          "$ref": "#/definitions/ContactosDto"
+        },
+        "SetorProfissional": {
+          "type": "string"
+        },
+        "Profissao": {
+          "type": "string"
+        },
+        "TipoContrato": {
+          "type": "string"
+        },
+        "DtInicioAtividade": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "EntidadePatronal": {
+          "type": "string"
+        },
+        "EntidadePatronalNIPC": {
+          "type": "string"
+        },
+        "EntidadePatronalTlf": {
+          "type": "string"
+        },
+        "EntidadePatronalNACE": {
+          "type": "string"
+        },
+        "QuestoesBCFT": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BCFTDto"
+          }
+        },
+        "Rendimentos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RendimentosDto"
+          }
+        },
+        "Despesas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RendimentosDto"
+          }
+        },
+        "SegVida": {
+          "type": "boolean"
+        },
+        "SegVidaMais": {
+          "type": "boolean"
+        },
+        "SegVidaProtegida": {
+          "type": "boolean"
+        },
+        "RelTitular1": {
+          "type": "string"
+        },
+        "RelacionamentoEntidades": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelacionamentoEntidadesDto"
+          }
+        },
+        "DadosBancarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DadosBancariosDto"
+          }
+        }
+      }
+    },
+    "OutrosCreditosDto": {
+      "type": "object",
+      "properties": {
+        "IdInstituicaoFinanceira": {
+          "format": "double",
+          "type": "number"
+        },
+        "DtInicioCredito": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "DuracaoCredito": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "MntMensalidade": {
+          "format": "double",
+          "type": "number"
+        },
+        "MntDivida": {
+          "format": "double",
+          "type": "number"
+        },
+        "Produto": {
+          "type": "string"
+        },
+        "NumDossierExterno": {
+          "type": "string"
+        },
+        "CreditoHabitacao": {
+          "type": "boolean"
+        },
+        "Consolidar": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PropostaExternaRequestDto": {
+      "type": "object",
+      "properties": {
+        "IdSimulacao": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "NumProspect": {
+          "type": "string"
+        },
+        "CodSubFinalidade": {
+          "type": "string"
+        },
+        "AutorizaMKT": {
+          "type": "boolean"
+        },
+        "AutorizaSMS": {
+          "type": "boolean"
+        },
+        "AutorizaContacto": {
+          "type": "boolean"
+        },
+        "AutorizaCorreio": {
+          "type": "boolean"
+        },
+        "AutorizaEmail": {
+          "type": "boolean"
+        },
+        "DadosVeiculo": {
+          "$ref": "#/definitions/DetalheVeiculoDto"
+        },
+        "Entidades": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElementosDto"
+          }
+        },
+        "OutrosCreditos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OutrosCreditosDto"
+          }
+        }
+      }
+    },
+    "MotivoRecusaDto": {
+      "type": "object",
+      "properties": {
+        "Descricao": {
+          "type": "string"
+        },
+        "Codigo": {
+          "type": "string"
+        }
+      }
+    },
+    "PropostaExternaResponseDto": {
+      "type": "object",
+      "properties": {
+        "NumProspect": {
+          "type": "string"
+        },
+        "CodEstado": {
+          "type": "string"
+        },
+        "DescEstado": {
+          "type": "string"
+        },
+        "MotivoRecusa": {
+          "$ref": "#/definitions/MotivoRecusaDto"
+        }
+      }
+    },
+    "PropostaExternaResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/PropostaExternaResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "OutputDocumentosEmFaltaDto": {
+      "type": "object",
+      "properties": {
+        "Grupo": {
+          "type": "string"
+        },
+        "IDPedido": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "IDTipoDocumento": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DescricaoTipoDocumento": {
+          "type": "string"
+        },
+        "CodigoEstado": {
+          "type": "string"
+        },
+        "DescricaoEstado": {
+          "type": "string"
+        },
+        "CodigoMotivoRecusa": {
+          "type": "string"
+        },
+        "DescricaoMotivoRecusa": {
+          "type": "string"
+        },
+        "NIF": {
+          "type": "string"
+        },
+        "Nome": {
+          "type": "string"
+        }
+      }
+    },
+    "DownloadDto": {
+      "type": "object",
+      "properties": {
+        "TipoDoc": {
+          "type": "string"
+        },
+        "Nome": {
+          "type": "string"
+        },
+        "bFile": {
+          "type": "string"
+        }
+      }
+    },
+    "EventoDto": {
+      "type": "object",
+      "properties": {
+        "Estado": {
+          "type": "boolean"
+        },
+        "Nome": {
+          "type": "string"
+        }
+      }
+    },
+    "DetalhesFaltaPropostaResponseDto": {
+      "type": "object",
+      "properties": {
+        "Estado": {
+          "type": "string"
+        },
+        "NumProspect": {
+          "type": "string"
+        },
+        "MotivoRecusa": {
+          "$ref": "#/definitions/MotivoRecusaDto"
+        },
+        "DocumentosEmFalta": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OutputDocumentosEmFaltaDto"
+          }
+        },
+        "Download": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DownloadDto"
+          }
+        },
+        "Eventos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventoDto"
+          }
+        }
+      }
+    },
+    "DetalhesFaltaPropostaResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/DetalhesFaltaPropostaResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "OutputPendentesDto": {
+      "type": "object",
+      "properties": {
+        "NumProspect": {
+          "type": "string"
+        },
+        "IDPedido": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "CodEstadoDoc": {
+          "type": "string"
+        },
+        "DescEstadoDoc": {
+          "type": "string"
+        },
+        "UpdatedDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "OutputPendentesDtoListResponse": {
+      "type": "object",
+      "properties": {
+        "Data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OutputPendentesDto"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "type": "string"
+        },
+        "Errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "PropostaExternaEstadoResponseDto": {
+      "type": "object",
+      "properties": {
+        "CodParceiro": {
+          "type": "string"
+        },
+        "NumProspect": {
+          "type": "string"
+        },
+        "Estado": {
+          "type": "string"
+        },
+        "EstadoDesc": {
+          "type": "string"
+        },
+        "Motivo": {
+          "type": "string"
+        },
+        "DataAtualizacao": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "PropostaExternaEstadoResponseDtoListResponse": {
+      "type": "object",
+      "properties": {
+        "Data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PropostaExternaEstadoResponseDto"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "type": "string"
+        },
+        "Errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "ProposalPendingsAndStatusUpdateResponseDto": {
+      "type": "object",
+      "properties": {
+        "PendingsResponse": {
+          "$ref": "#/definitions/OutputPendentesDtoListResponse"
+        },
+        "StatusUpdateResponse": {
+          "$ref": "#/definitions/PropostaExternaEstadoResponseDtoListResponse"
+        }
+      }
+    },
+    "ProposalPendingsAndStatusUpdateResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/ProposalPendingsAndStatusUpdateResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "FinancialInstitutionByBankCodeResponseDto": {
+      "type": "object",
+      "properties": {
+        "IdInstituicaoFinanceira": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FinancialInstitutionByBankCodeResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/FinancialInstitutionByBankCodeResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "ManufacturerResponseDto": {
+      "type": "object",
+      "properties": {
+        "IDMarca": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Marca": {
+          "type": "string"
+        }
+      }
+    },
+    "ManufacturerResponseDtoListViewModel": {
+      "description": "List response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "description": "Generic data as list",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ManufacturerResponseDto"
+          }
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "ModelsResponseDto": {
+      "type": "object",
+      "properties": {
+        "IDMarca": {
+          "format": "double",
+          "type": "number"
+        },
+        "IDModelo": {
+          "format": "double",
+          "type": "number"
+        },
+        "IDBemFinanciar": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Modelo": {
+          "type": "string"
+        }
+      }
+    },
+    "ModelsResponseDtoListViewModel": {
+      "description": "List response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "description": "Generic data as list",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ModelsResponseDto"
+          }
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "VersionsResponseDto": {
+      "type": "object",
+      "properties": {
+        "IDVersao": {
+          "format": "double",
+          "type": "number"
+        },
+        "IDModelo": {
+          "format": "double",
+          "type": "number"
+        },
+        "IDBemFinanciar": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Versao": {
+          "type": "string"
+        }
+      }
+    },
+    "VersionsResponseDtoListViewModel": {
+      "description": "List response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "description": "Generic data as list",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VersionsResponseDto"
+          }
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "MappingsResponseDto": {
+      "type": "object",
+      "properties": {
+        "IDVersao": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "MappingsResponseDtoListViewModel": {
+      "description": "List response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "description": "Generic data as list",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MappingsResponseDto"
+          }
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    },
+    "ComissaoDto": {
+      "type": "object",
+      "properties": {
+        "IdComissao": {
+          "format": "double",
+          "type": "number"
+        },
+        "IdSimulacao": {
+          "format": "double",
+          "type": "number"
+        },
+        "Codigo": {
+          "type": "string"
+        },
+        "Montante": {
+          "format": "double",
+          "type": "number"
+        },
+        "CodLocPagamento": {
+          "type": "string"
+        },
+        "Percentagem": {
+          "format": "double",
+          "type": "number"
+        },
+        "MontanteMinimo": {
+          "format": "double",
+          "type": "number"
+        },
+        "MontanteMaximo": {
+          "format": "double",
+          "type": "number"
+        },
+        "Financiada": {
+          "type": "boolean"
+        },
+        "Ativo": {
+          "type": "boolean"
+        }
+      }
+    },
+    "DespesaDiversaDto": {
+      "type": "object",
+      "properties": {
+        "IdDespesaDiversa": {
+          "format": "double",
+          "type": "number"
+        },
+        "IdSimulacao": {
+          "format": "double",
+          "type": "number"
+        },
+        "CodDespesaDiversa": {
+          "type": "string"
+        },
+        "Montante": {
+          "format": "double",
+          "type": "number"
+        },
+        "MontanteMinimo": {
+          "format": "double",
+          "type": "number"
+        },
+        "CodCobertura": {
+          "type": "string"
+        },
+        "DataFim": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "DataNascimento": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "CodigoPostal1": {
+          "type": "string"
+        },
+        "CodigoPostal2": {
+          "type": "string"
+        },
+        "Ativo": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SimulacaoExternaRequestDto": {
+      "type": "object",
+      "properties": {
+        "IdSimulacao": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Save": {
+          "type": "boolean"
+        },
+        "CodTipSimulacao": {
+          "type": "string"
+        },
+        "TipoSimulacaoValor": {
+          "format": "double",
+          "type": "number"
+        },
+        "TipoCliente": {
+          "type": "string"
+        },
+        "TipoUtilizacao": {
+          "type": "string"
+        },
+        "TipoOferta": {
+          "type": "string"
+        },
+        "TipoProduto": {
+          "type": "string"
+        },
+        "CodOfertaExterna": {
+          "type": "string"
+        },
+        "Ano": {
+          "type": "string"
+        },
+        "Bem": {
+          "type": "string"
+        },
+        "EstadoBem": {
+          "type": "string"
+        },
+        "Importado": {
+          "type": "boolean"
+        },
+        "iPrimRegAutoPort": {
+          "type": "boolean"
+        },
+        "CodParceiro": {
+          "type": "string"
+        },
+        "Username": {
+          "type": "string"
+        },
+        "NomeVendedor": {
+          "type": "string"
+        },
+        "MntPVP": {
+          "format": "double",
+          "type": "number"
+        },
+        "MntEntradaInicial": {
+          "format": "double",
+          "type": "number"
+        },
+        "MntCapitalResidual": {
+          "format": "double",
+          "type": "number"
+        },
+        "Periodicidade": {
+          "type": "string"
+        },
+        "NrPrestacoes": {
+          "type": "string"
+        },
+        "NrSeguroVida": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "NrSeguroVidaMais": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "NrSeguroVidaProtegida": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "TipoSeguroVidaSegundoTitular": {
+          "type": "string"
+        },
+        "DetalheVeiculo": {
+          "$ref": "#/definitions/DetalheVeiculoDto"
+        },
+        "Comissoes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComissaoDto"
+          }
+        },
+        "CoberturasSeguroAuto": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DespesaDiversaDto"
+          }
+        }
+      }
+    },
+    "SimulacaoExternaResponseDto": {
+      "type": "object",
+      "properties": {
+        "IDSimulacao": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TAN": {
+          "format": "double",
+          "type": "number"
+        },
+        "TAEG": {
+          "format": "double",
+          "type": "number"
+        },
+        "MTIC": {
+          "format": "double",
+          "type": "number"
+        },
+        "RegimeLegal": {
+          "type": "boolean"
+        },
+        "UltimaPrestacao": {
+          "format": "double",
+          "type": "number"
+        },
+        "ISUC": {
+          "format": "double",
+          "type": "number"
+        },
+        "ComProcPrestacao": {
+          "format": "double",
+          "type": "number"
+        },
+        "ComAbertura": {
+          "format": "double",
+          "type": "number"
+        },
+        "SegurosCredito": {
+          "format": "double",
+          "type": "number"
+        },
+        "SegurosVida": {
+          "format": "double",
+          "type": "number"
+        },
+        "TransfPropriedade": {
+          "format": "double",
+          "type": "number"
+        },
+        "ExtReserva": {
+          "format": "double",
+          "type": "number"
+        },
+        "LocalPagComAbertura": {
+          "type": "string"
+        },
+        "LocalPagComAberturaDesc": {
+          "type": "string"
+        },
+        "ComFixa": {
+          "format": "double",
+          "type": "number"
+        },
+        "ComNegocio": {
+          "format": "double",
+          "type": "number"
+        },
+        "ComAdicional": {
+          "format": "double",
+          "type": "number"
+        },
+        "Subvencao": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "SimulacaoExternaResponseDtoSingleViewModel": {
+      "description": "Single object response structure",
+      "type": "object",
+      "properties": {
+        "Data": {
+          "$ref": "#/definitions/SimulacaoExternaResponseDto"
+        },
+        "Success": {
+          "description": "Request success",
+          "type": "boolean"
+        },
+        "HasErrors": {
+          "description": "Request errors flag",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "Notification": {
+          "description": "Notification to be displayed",
+          "type": "string"
+        },
+        "Errors": {
+          "description": "Request internal errors",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorViewModel"
+          }
+        }
+      }
+    }
+  }
+}
